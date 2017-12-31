@@ -1,0 +1,1 @@
+var openHeroArr = ["Batman", "Nick Fury", "Spider-Man", "Wonder Woman", "Donatello"]
