@@ -1,0 +1,39 @@
+.cTestButton{
+	background-color: #ff5050; /* adjust the background color of the button */
+	font-size: 15px;
+	border-radius: 4px;
+
+	position: relative;
+    border: none;
+    color: #FFFFFF;
+    padding: 3px;
+    width: 100px;
+    text-align: center;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+.cTestButton:hover {
+	background-color: #3ebec6; /* adjust the color of the buton when hovered over for effect */
+	color: white;
+}
+.cTestButton:after{ /* Effect to happen after the button is clicked */
+	content: "";
+	background: #f1f1f1;
+	display: block;
+	position: absolute;
+	padding-top: 300%;
+	padding-left: 350%;
+	margin-left: -20px !important;
+	margin-top: -120%;
+	opacity: 0;
+	transition: all 0.8s
+}
+.cTestButton:active:after{ /* The active after effect after the button is clicked. */
+	padding: 0;
+    margin: 0;
+    opacity: 3;
+    transition: 0s
+}
