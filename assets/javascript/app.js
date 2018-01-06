@@ -1,6 +1,6 @@
 // Array to hold some default names which will be used to 
 var heroArray = ["Batman", "Nick Fury", "Spider-Man", "Wonder Woman", "Donatello"];
-// var apiKey = lUF9860zUXEgSmf3JfJZ5EIGOin9lvdX;
+var apiKey = lUF9860zUXEgSmf3JfJZ5EIGOin9lvdX;
 
 /* 
 use to check the queries
@@ -8,22 +8,18 @@ https://developers.giphy.com/explorer/
 */
 
 // In this case, the "this" keyword refers to the button that was clicked
+var searchEntry = $(this).attr("iEntryInput");
 
-// var searchEntry = $(this).attr("iEntryInput");
-
-
-// Constructing a URL to search Giphy for the name of the person who said the quote
-
-// var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchEntry + 
-// "&api_key=" + apiKey + "&limit=10";
+// Constructing a URL to search gif for the name of the person who said the quote.
+var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchEntry + "&api_key=" + apiKey + "&limit=10";
 
 
+/*The following lines will handle creating the button which will be used.*/
 //This simply throws an alert to test that it works.
 function alertHeroAdded() {
     var heroName = $(this).attr("data-name");
     alert(heroName);
 }
-
 //display the required information.
 function buttonCreation() {
     //this is going to delete the current infomration shown.
@@ -39,7 +35,6 @@ function buttonCreation() {
         $("#iNewGifBtnZone").append(a);
     }
 }
-
 $("#iAddEntry").on("click", function(event) {
     /*when this button is clicked it will add the text into the array
     and create a button. */
@@ -49,15 +44,14 @@ $("#iAddEntry").on("click", function(event) {
     buttonCreation();
 });
 
-$(document).on("click", ".cTestButton", alertHeroAdded);
-
+$(document).on("click", ".cTestButton", alertHeroAdded); //when the button is clicked throw an alert - this will need to be changed to pull up the gifs.
 buttonCreation();
 
-
-// $.ajax({
-// 	url: queryURL,
-// 	method: "GET"
-// })
+//AJAX call to get the information for the search to the GIF API
+$.ajax({
+    url: queryURL,
+    method: "GET"
+})
 
 
 
