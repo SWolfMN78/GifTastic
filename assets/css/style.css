@@ -45,3 +45,13 @@
     opacity: 3;
     transition: 0s
 }
+
+.cEntryForm {
+    float: right;
+    width: 30%;
+}
+
+.cGifGoHere {
+    float: left;
+    width: 70%;
+}
