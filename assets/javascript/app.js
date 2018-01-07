@@ -1,25 +1,16 @@
 // Array to hold some default names which will be used to 
 var heroArray = ["Batman", "Nick Fury", "Spider-Man", "Wonder Woman", "Donatello"];
-var apiKey = lUF9860zUXEgSmf3JfJZ5EIGOin9lvdX;
+var apiKey = "lUF9860zUXEgSmf3JfJZ5EIGOin9lvdX";
 
-/* 
-use to check the queries
-https://developers.giphy.com/explorer/ 
-*/
+/* use to check the queries https://developers.giphy.com/explorer/ */
 
-// In this case, the "this" keyword refers to the button that was clicked
-var searchEntry = $(this).attr("iEntryInput");
-
-// Constructing a URL to search gif for the name of the person who said the quote.
-var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchEntry + "&api_key=" + apiKey + "&limit=10";
-
-
-/*The following lines will handle creating the button which will be used.*/
-//This simply throws an alert to test that it works.
+/*The following lines will handle creating the button which will be used.
+This simply throws an alert to test that it works. */
 function alertHeroAdded() {
     var heroName = $(this).attr("data-name");
     alert(heroName);
 }
+
 //display the required information.
 function buttonCreation() {
     //this is going to delete the current infomration shown.
@@ -27,12 +18,11 @@ function buttonCreation() {
 
     //start picking over the hero array and grab the index of where it's at.
     for (var i = 0; i < heroArray.length; i++) {
-
-        var a = $("<button>");
-        a.addClass("cTestButton");
-        a.attr("data-name", heroArray[i]);
-        a.text(heroArray[i]);
-        $("#iNewGifBtnZone").append(a);
+        var a = $("<button>"); // create a button which will store the info
+        a.addClass("cTestButton"); //give the button a class.
+        a.attr("data-name", heroArray[i]); //this attr will be used to pull down the hero name for the gif
+        a.text(heroArray[i]); //set the text to the point in the array
+        $("#iNewGifBtnZone").append(a); //add the button to the list.
     }
 }
 $("#iAddEntry").on("click", function(event) {
@@ -44,17 +34,46 @@ $("#iAddEntry").on("click", function(event) {
     buttonCreation();
 });
 
-$(document).on("click", ".cTestButton", alertHeroAdded); //when the button is clicked throw an alert - this will need to be changed to pull up the gifs.
+/* When the button is clicked run the code to pull up the
+gif according to the button's attr. */
+$(".cButtonContainer").on("click", ".cTestButton", pullGifImg);
 buttonCreation();
 
-//AJAX call to get the information for the search to the GIF API
-$.ajax({
-    url: queryURL,
-    method: "GET"
-})
+function pullGifImg() {
+    /*Here is where the code for the gif's will go: */
+    // In this case, the "this" keyword refers to the button that was clicked
+    var searchEntry = $(this).attr("data-name");
 
+    // Constructing a URL to search gif for the name of the person who said the quote.
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchEntry + "&api_key=" + apiKey + "&limit=10";
 
+    //AJAX call to get the information for the search to the GIF API
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
 
+    .done(function(response) {
+        var results = response.data;
 
-/* When the user selects one of the buttons in the list 
-display the gif tied to it. */
+        for (var i = 0; i < results.length; i++) {
+            if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+                var gifDiv = $("<div class='item'>");
+
+                var rating = results[i].rating;
+
+                var p = $("<p>").text("Rating: " + rating);
+
+                var gifImage = $("<img>");
+
+                gifImage.attr("src", results[i].images.fixed_height.url);
+
+                gifDiv.append(p);
+                gifDiv.append(gifImage);
+
+                $("#gifsGoHere").prepend(gifDiv);
+            }
+        }
+    })
+
+}
